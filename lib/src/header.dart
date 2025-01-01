@@ -2,9 +2,17 @@ import 'package:flutter/material.dart';
 
 class Header extends StatelessWidget {
   final int tryCount;
-  Header({super.key, this.tryCount = 0});
+  final int score;
+  final VoidCallback resetGame; //리셋 콜백 추가
+  final int matchedCards;
 
-  int score = 100;
+  Header({
+    super.key,
+    this.tryCount = 0,
+    this.score = 0,
+    this.matchedCards = 0,
+    required this.resetGame, //생성자에 required this.resetGame을 추가
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -59,13 +67,25 @@ class Header extends StatelessWidget {
             ],
           )),
           Expanded(
-            child: Container(
-              margin: EdgeInsets.only(top: 10, bottom: 10, left: 20),
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(6),
-                color: Color(0xff94BEE5),
+            child: GestureDetector(
+              //GestureDetector : 사용자 동작 감지 @@@
+              onTap: resetGame, // 버튼 클릭 시 resetGame 호출
+              child: Container(
+                margin: const EdgeInsets.only(top: 10, bottom: 10, left: 20),
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(6),
+                  color: const Color(0xff94BEE5),
+                ),
+                child: const Center(
+                  child: Text(
+                    '새 게임',
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                ),
               ),
-              child: Center(child: Text('새 게임')),
             ),
           ),
         ],
